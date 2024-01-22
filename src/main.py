@@ -7,6 +7,23 @@ def ConsoleSetup():
     os.system("title SM Devmode Switcher")
     consoleColor("Aqua")
 
+
+def AsciiLogo():
+    print("""
+
+███████╗███╗   ███╗██████╗ ███╗   ███╗███████╗
+██╔════╝████╗ ████║██╔══██╗████╗ ████║██╔════╝
+███████╗██╔████╔██║██║  ██║██╔████╔██║███████╗
+╚════██║██║╚██╔╝██║██║  ██║██║╚██╔╝██║╚════██║
+███████║██║ ╚═╝ ██║██████╔╝██║ ╚═╝ ██║███████║
+╚══════╝╚═╝     ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝
+Made By Amicia             Discord: amicia.dev
+          
+__________________________________________________________________________________________________________
+
+        """)
+
+
 def consoleColor(color):
     if color == "Green":
         os.system("color " + "A")
@@ -28,11 +45,6 @@ def debugger():
     print("")
     print("")
     print_path()
-    print("")
-    print("")
-    print("")
-    print("DevMode Status:")
-    status()
     print("")
     print("")
     print("")
@@ -58,11 +70,13 @@ def debugger():
     input()
 
 def find_path():
+    
     consoleColor("Purple")
     print("Searching For SurvivalGame.lua...")
     subprocess.run([r"locatepath.bat"])
     if os.path.exists('path.x1'):
         os.system('cls')
+        AsciiLogo()
         consoleColor("Green")
         print("Found Lua Path!")
         print("")
@@ -71,6 +85,7 @@ def find_path():
         print("Press Enter To Return To Menu.")
         input()
     else:
+        AsciiLogo()
         consoleColor("Yellow")
         os.system('cls')
         print("Lua File Not Found :(")
@@ -107,10 +122,12 @@ def print_path():
 def deleteSavedPath():
 
     os.remove("path.x1")
-    ftsCheck()
+    find_path()
     return
 
 def status():
+
+    AsciiLogo()
 
     HasDev = "local addCheats = true"
     HasDevNot = "local addCheats = g_survivalDev"
@@ -140,11 +157,12 @@ def status():
 def ftsCheck():
 
     if os.path.exists('path.x1'):
+        AsciiLogo()
         print("Resetting Saved Lua Path.")
         print("")
         deleteSavedPath()
     else:
-
+        AsciiLogo()
         find_path()
 
 def devModeCommandList():
@@ -205,7 +223,7 @@ Command List:
 
 
 def switcher():
-
+    AsciiLogo()
     print("1. Normal Mode")
     print("2. Dev Mode")
     print("3. Back")
@@ -220,43 +238,56 @@ def switcher():
         os.system('cls')
         devMode()
     elif choice == 3:
-        os.system('cls')
-    return
+        return
 
 def normalMode():
     consoleColor("Purple")
     print("Selecting Normal Mode...")
-    with open('path.x1', 'r') as f:
-            pathdata = f.read()
-            pathdata = pathdata.replace('\n', '')
-            luafile = open(pathdata)
-            luafilecontent = luafile.read()
-            modifiedLuaFile = luafilecontent.replace('local addCheats = true', 'local addCheats = g_survivalDev')
+    if os.path.exists('path.x1'):
+        with open('path.x1', 'r') as f:
+                pathdata = f.read()
+                pathdata = pathdata.replace('\n', '')
+                luafile = open(pathdata)
+                luafilecontent = luafile.read()
+                modifiedLuaFile = luafilecontent.replace('local addCheats = true', 'local addCheats = g_survivalDev')
 
-    with open(pathdata, 'w') as f2:
-        f2.write(modifiedLuaFile)
+        with open(pathdata, 'w') as f2:
+            f2.write(modifiedLuaFile)
 
-    print("Mode Switched To Normal Mode!")
-    print("")
-    print("Press Enter To Go Back To Main Menu.")
-    input()
+        print("Mode Switched To Normal Mode!")
+        print("")
+        print("Press Enter To Go Back To Main Menu.")
+        input()
+    else:
+        print("Path Not Set :(")
+        print("Please Run First Time Setup / Reset Lua Path.")
+        print("")
+        print("Press Enter To Go Back To Main Menu.")
+        input()
 def devMode():
     consoleColor("Purple")
     print("Selecting Normal Mode...")
-    with open('path.x1', 'r') as f:
-            pathdata = f.read()
-            pathdata = pathdata.replace('\n', '')
-            luafile = open(pathdata)
-            luafilecontent = luafile.read()
-            modifiedLuaFile = luafilecontent.replace('local addCheats = g_survivalDev', 'local addCheats = true')
+    if os.path.exists('path.x1'):
+        with open('path.x1', 'r') as f:
+                pathdata = f.read()
+                pathdata = pathdata.replace('\n', '')
+                luafile = open(pathdata)
+                luafilecontent = luafile.read()
+                modifiedLuaFile = luafilecontent.replace('local addCheats = g_survivalDev', 'local addCheats = true')
 
-    with open(pathdata, 'w') as f2:
-        f2.write(modifiedLuaFile)
+        with open(pathdata, 'w') as f2:
+            f2.write(modifiedLuaFile)
 
-    print("Mode Switched To Dev Mode!")
-    print("")
-    print("Press Enter To Go Back To Main Menu.")
-    input()
+        print("Mode Switched To Dev Mode!")
+        print("")
+        print("Press Enter To Go Back To Main Menu.")
+        input()
+    else:
+        print("Path Not Set :(")
+        print("Please Run First Time Setup / Reset Lua Path.")
+        print("")
+        print("Press Enter To Go Back To Main Menu.")
+        input()
 def info():
 
     consoleColor("White")
@@ -315,12 +346,12 @@ def main():
 
     while True:
         os.system('cls')
+        AsciiLogo()
         consoleColor("Aqua")
-        print("Scrap Mechanic Survival DevMode Toggle.")
         print("")
-        print("1. First Time Setup / Reset Lua Path")
-        print("2. Mode Switcher")
-        print("3. DevMode Status")
+        print("1. Mode Switcher")
+        print("2. Mode Status")
+        print("3. First Time Setup / Reset Lua Path")
         print("4. Scrap Mechanic Command List")
         print("5. Debug")
         print("6. Help")
@@ -329,21 +360,21 @@ def main():
 
         choice = int(input("Enter Your Choice: "))
         
-        if choice == 1: #First Time Setup Choice
-            os.system('cls')
-            ftsCheck()
-            print("")
-        elif choice == 2: #Switcher Choice
+        if choice == 1: #Switcher Choice
             os.system('cls')
             switcher()
             os.system('cls')
-        elif choice == 3: #Dev Status Choice
+        elif choice == 2: #Dev Status Choice
             os.system('cls')
             status()
             print("")
             for i in range(3, 0, -1):
                 print(i, end="\r")
                 time.sleep(1)
+            print("")
+        elif choice == 3: #First Time Setup Choice
+            os.system('cls')
+            ftsCheck()
             print("")
         elif choice == 4: #Scrap Mechanic Command List Choice
             os.system('cls')
@@ -363,14 +394,12 @@ def main():
             print("Invalid Choice. Please Try Again.")
             time.sleep(1)
             os.system('cls')
-
         else:
             print("Invalid Choice. Please Try Again.")
             time.sleep(1)
             os.system('cls')
 
 if __name__ == '__main__':
-    os.chdir("data")
+    os.chdir("src")
     ConsoleSetup()
     main()
-    quit()
